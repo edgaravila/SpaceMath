@@ -33,7 +33,7 @@
       margin-left: 10px;
     }
 
-    #dragon, #glass {
+    #dragon, #glass, #fire {
       width: 15vw;
       height: 15vw;
       background-size: contain;
@@ -53,6 +53,12 @@
       background-image: url('Glass.png');
       top: 70vh;
       left: 70vw;
+    }
+
+    #fire {
+      background-image: url('Fire.png');
+      top: 60vh;
+      left: 80vw;
     }
 
     #startBtn {
@@ -80,7 +86,8 @@
     }
 
     #dragon.stretching,
-    #glass.stretching {
+    #glass.stretching,
+    #fire.stretching {
       animation: estirado 0.3s ease-out;
     }
   </style>
@@ -102,6 +109,7 @@
   <!-- Sprites -->
   <div id="dragon"></div>
   <div id="glass"></div>
+  <div id="fire"></div>
 
   <!-- Botón de inicio -->
   <button id="startBtn" onclick="alert('Inicia el juego...')">Start</button>
@@ -112,6 +120,9 @@
 
   const glass = document.getElementById('glass');
   const glassSound = new Audio('glass.mp3');
+    
+  const fire = document.getElementById('fire');
+  const fireSound = new Audio('fire.mp3');
 
   const musica = document.getElementById('musicaFondo');
   const btnPlay = document.getElementById('btnPlay');
@@ -133,12 +144,23 @@
     setTimeout(() => glass.classList.remove('stretching'), 300);
   }
 
+    function estirarFire() {
+    fire.classList.add('stretching');
+    fireSound.currentTime = 0;
+    fireSound.play().catch(err => console.log("Autoplay bloqueado:", err));
+    setTimeout(() => fire.classList.remove('stretching'), 300);
+  }
+
+
   // Eventos individuales
   dragon.addEventListener('mousedown', estirarDragon);
   dragon.addEventListener('touchstart', estirarDragon);
 
   glass.addEventListener('mousedown', estirarGlass);
   glass.addEventListener('touchstart', estirarGlass);
+
+  fire.addEventListener('mousedown', estirarFire);
+  fire.addEventListener('touchstart', estirarFire);
 
   // Control de música
   btnPlay.addEventListener('click', () => {
@@ -157,6 +179,7 @@
 
 </body>
 </html>
+
 
 
 
