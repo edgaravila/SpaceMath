@@ -3,8 +3,26 @@
 <head>
  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+ #music-control {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.music-btn {
+  font-size: 30px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline;
+  margin-left: 10px;
+}
   
   <meta charset="UTF-8" />
+ 
   <title>SpaceMath</title>
   <style>
     body {
@@ -66,11 +84,14 @@
 <body>
  
 
- <audio id="musicaFondo" autoplay loop>
+ <audio id="musicaFondo" loop>
   <source src="inicio.mp3" type="audio/mpeg">
  </audio>
 
- <button onclick="document.getElementById('musicaFondo').play()">Iniciar música</button>
+<div id="music-control">
+  <button id="btnPlay" class="music-btn" title="Encender música">🎵</button>
+  <button id="btnMute" class="music-btn" title="Silenciar música" style="display: none;">🔇</button>
+</div>
 
   <!-- Sprite interactivo -->
   <div id="dragon"></div>
@@ -105,10 +126,27 @@
   });
 
   const musica = document.getElementById('musicaFondo');
-  musica.volume = 0.4; // Volumen entre 0 (silencio) y 1 (máximo)
+  const btnPlay = document.getElementById('btnPlay');
+  const btnMute = document.getElementById('btnMute');
+
+  musica.volume = 0.45;
+
+  btnPlay.addEventListener('click', () => {
+    musica.play().then(() => {
+      btnPlay.style.display = 'none';
+      btnMute.style.display = 'inline';
+    }).catch((err) => {
+      console.log("El navegador bloqueó el audio hasta que el usuario interactúe:", err);
+    });
+  });
+
+  btnMute.addEventListener('click', () => {
+    musica.pause();
+    btnMute.style.display = 'none';
+    btnPlay.style.display = 'inline';
+  });
   
 </script>
-
 
  
 </body>
