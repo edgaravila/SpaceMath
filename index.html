@@ -58,32 +58,75 @@
   <!-- Botón de inicio -->
   <button id="startBtn" onclick="alert('Inicia el juego...')">Start</button>
 
-  <script>
-    const el = document.getElementById('dragon');
-    let isDragging = false;
-    let startX, startY;
+ <script>
+  const el = document.getElementById('dragon');
 
-    el.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      el.classList.add('dragging');
-      startX = e.clientX;
-      startY = e.clientY;
-    });
+  let isDragging = false;
+  let offsetX = 0, offsetY = 0;
+  let velocityX = 0, velocityY = 0;
+  let posX = 0, posY = 0;
 
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-      el.style.transform = `translate(${dx}px, ${dy}px)`;
-    });
+  // Configura la posición inicial como centro lógico
+  const originX = 0;
+  const originY = 0;
 
-    document.addEventListener('mouseup', () => {
-      if (!isDragging) return;
-      isDragging = false;
-      el.classList.remove('dragging');
-      el.style.transform = `translate(0px, 0px)`;
-    });
-  </script>
+  el.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    el.classList.add('dragging');
+    offsetX = e.clientX;
+    offsetY = e.clientY;
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    posX = e.clientX - offsetX;
+    posY = e.clientY - offsetY;
+    el.style.transform = `translate(${posX}px, ${posY}px)`;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    el.classList.remove('dragging');
+    animateBack();
+  });
+
+  function animateBack() {
+    function step() {
+      const spring = 0.1;   // fuerza de retorno
+      const damping = 0.8;  // pérdida de energía
+
+      // Calcula fuerza de regreso
+      let forceX = (originX - posX) * spring;
+      let forceY = (originY - posY) * spring;
+
+      // Aplica fuerza a la velocidad
+      velocityX += forceX;
+      velocityY += forceY;
+
+      // Aplica fricción
+      velocityX *= damping;
+      velocityY *= damping;
+
+      // Mueve la posición
+      posX += velocityX;
+      posY += velocityY;
+
+      // Actualiza posición visual
+      el.style.transform = `translate(${posX}px, ${posY}px)`;
+
+      // Sigue mientras no esté "casi quieto"
+      if (Math.abs(velocityX) > 0.1 || Math.abs(velocityY) > 0.1) {
+        requestAnimationFrame(step);
+      } else {
+        el.style.transform = `translate(0px, 0px)`;
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+</script>
 
 </body>
 </html>
+
