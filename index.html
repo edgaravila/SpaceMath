@@ -107,50 +107,57 @@
   <button id="startBtn" onclick="alert('Inicia el juego...')">Start</button>
 
   <script>
-    const dragon = document.getElementById('dragon');
-    const dragonSound = new Audio('dragon.mp3');
+  const dragon = document.getElementById('dragon');
+  const dragonSound = new Audio('dragon.mp3');
 
-    const glass = document.getElementById('glass');
-    const glassSound = new Audio('glass.mp3');
+  const glass = document.getElementById('glass');
+  const glassSound = new Audio('glass.mp3');
 
-    const musica = document.getElementById('musicaFondo');
-    const btnPlay = document.getElementById('btnPlay');
-    const btnMute = document.getElementById('btnMute');
+  const musica = document.getElementById('musicaFondo');
+  const btnPlay = document.getElementById('btnPlay');
+  const btnMute = document.getElementById('btnMute');
 
-    musica.volume = 0.45;
+  musica.volume = 0.45;
 
-    function estirarElemento(elemento, sonido) {
-      elemento.classList.add('stretching');
-      sonido.currentTime = 0;
-      sonido.play().catch(err => console.log("Autoplay bloqueado:", err));
-      setTimeout(() => elemento.classList.remove('stretching'), 300);
-    }
+  function estirarDragon() {
+    dragon.classList.add('stretching');
+    dragonSound.currentTime = 0;
+    dragonSound.play().catch(err => console.log("Autoplay bloqueado:", err));
+    setTimeout(() => dragon.classList.remove('stretching'), 300);
+  }
 
-    // Eventos dragón
-    dragon.addEventListener('mousedown', () => estirarElemento(dragon, dragonSound));
-    dragon.addEventListener('touchstart', () => estirarElemento(dragon, dragonSound));
+  function estirarGlass() {
+    glass.classList.add('stretching');
+    glassSound.currentTime = 0;
+    glassSound.play().catch(err => console.log("Autoplay bloqueado:", err));
+    setTimeout(() => glass.classList.remove('stretching'), 300);
+  }
 
-    // Eventos glass
-    glass.addEventListener('mousedown', () => estirarElemento(glass, glassSound));
-    glass.addEventListener('touchstart', () => estirarElemento(glass, glassSound));
+  // Eventos individuales
+  dragon.addEventListener('mousedown', estirarDragon);
+  dragon.addEventListener('touchstart', estirarDragon);
 
-    // Control de música
-    btnPlay.addEventListener('click', () => {
-      musica.play().then(() => {
-        btnPlay.style.display = 'none';
-        btnMute.style.display = 'inline';
-      }).catch(err => console.log("El navegador bloqueó el audio:", err));
-    });
+  glass.addEventListener('mousedown', estirarGlass);
+  glass.addEventListener('touchstart', estirarGlass);
 
-    btnMute.addEventListener('click', () => {
-      musica.pause();
-      btnMute.style.display = 'none';
-      btnPlay.style.display = 'inline';
-    });
-  </script>
+  // Control de música
+  btnPlay.addEventListener('click', () => {
+    musica.play().then(() => {
+      btnPlay.style.display = 'none';
+      btnMute.style.display = 'inline';
+    }).catch(err => console.log("El navegador bloqueó el audio:", err));
+  });
+
+  btnMute.addEventListener('click', () => {
+    musica.pause();
+    btnMute.style.display = 'none';
+    btnPlay.style.display = 'inline';
+  });
+</script>
 
 </body>
 </html>
+
 
 
 
