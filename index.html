@@ -80,11 +80,25 @@
   el.addEventListener('mouseup', () => {
     setTimeout(() => el.classList.remove('stretching'), 300);
   });
+
+   const el = document.getElementById('dragon');
+  const sonido = new Audio('dragon.mp3'); 
+
+  el.addEventListener('mousedown', () => {
+    el.classList.add('stretching');
+    sonido.currentTime = 0;
+    sonido.play();
+  });
+
+  el.addEventListener('mouseup', () => {
+    setTimeout(() => el.classList.remove('stretching'), 300);
+  });
    
 </script>
 
 </body>
 </html>
+
 
 
 
