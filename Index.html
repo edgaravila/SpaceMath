@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pantalla de Inicio - Danielito Estudia</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background-image: url('INTRO.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    #dragon {
+      width: 180px;
+      height: 180px;
+      background-image: url('Dragon.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 300px;
+      left: 700px;
+      transition: transform 0.5s ease-out;
+      cursor: grab;
+    }
+
+    #dragon.dragging {
+      cursor: grabbing;
+      transition: none;
+    }
+
+    #startBtn {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 22px;
+      padding: 12px 28px;
+      background-color: #ffd700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #fff;
+    }
+
+    #startBtn:hover {
+      background-color: #f1c40f;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sprite interactivo -->
+  <div id="dragon"></div>
+
+  <!-- Botón de inicio -->
+  <button id="startBtn" onclick="alert('Inicia el juego...')">Start</button>
+
+  <script>
+    const el = document.getElementById('dragon');
+    let isDragging = false;
+    let startX, startY;
+
+    el.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      el.classList.add('dragging');
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      el.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      el.classList.remove('dragging');
+      el.style.transform = `translate(0px, 0px)`;
+    });
+  </script>
+
+</body>
+</html>
