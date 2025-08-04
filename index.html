@@ -46,6 +46,19 @@
       cursor: grab;
     }
 
+     #glass {
+      width: 15vw;
+      height: 15vw;
+      background-image: url('Glass.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 70vh;
+      left: 70vw;
+      transform: translate(-50%, -50%);
+      cursor: grab;
+    }
+
     #startBtn {
       position: absolute;
       bottom: 5vh;
@@ -72,6 +85,10 @@
 
     #dragon.stretching {
       animation: estirado 0.3s ease-out;
+
+    #glass.stretching {
+      animation: estirado 0.3s ease-out;
+          
     }
   </style>
 </head>
@@ -91,6 +108,7 @@
 
   <!-- Dragón interactivo -->
   <div id="dragon"></div>
+  <div id="glass"></div>
 
   <!-- Botón de inicio -->
   <button id="startBtn" onclick="alert('Inicia el juego...')">Start</button>
@@ -98,6 +116,11 @@
   <script>
     const el = document.getElementById('dragon');
     const sonido = new Audio('dragon.mp3');
+    
+    const glass = document.getElementById('glass');
+    const glass_sound = new Audio('glass.mp3');
+    
+    
     const musica = document.getElementById('musicaFondo');
     const btnPlay = document.getElementById('btnPlay');
     const btnMute = document.getElementById('btnMute');
@@ -110,6 +133,11 @@
       sonido.currentTime = 0;
       sonido.play().catch(err => console.log("Autoplay bloqueado:", err));
       setTimeout(() => el.classList.remove('stretching'), 300);
+
+      glass.classList.add('stretching');
+      glass_sound.currentTime = 0;
+      glass_sound.play().catch(err => console.log("Autoplay bloqueado:", err));
+      setTimeout(() => glass.classList.remove('stretching'), 300);
     }
 
     // PC
@@ -137,6 +165,7 @@
 
 </body>
 </html>
+
 
 
 
