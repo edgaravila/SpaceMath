@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+ 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <meta charset="UTF-8" />
-  <title>Pantalla de Inicio - Danielito Estudia</title>
+  <title>SpaceMath</title>
   <style>
     body {
       margin: 0;
@@ -69,7 +72,8 @@
   <button id="startBtn" onclick="alert('Inicia el juego...')">Start</button>
 
  <script>
-  const el = document.getElementById('dragon');
+  
+   const el = document.getElementById('dragon');
 
   // Cuando presionas
   el.addEventListener('mousedown', () => {
@@ -81,7 +85,6 @@
     setTimeout(() => el.classList.remove('stretching'), 300);
   });
 
-   const el = document.getElementById('dragon');
   const sonido = new Audio('dragon.mp3'); 
 
   el.addEventListener('mousedown', () => {
@@ -98,6 +101,7 @@
 
 </body>
 </html>
+
 
 
 
