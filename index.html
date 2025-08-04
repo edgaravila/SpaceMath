@@ -48,6 +48,16 @@
     #startBtn:hover {
       background-color: #f1c40f;
     }
+
+@keyframes estirado {
+  0%   { transform: scale(1, 1); }
+  50%  { transform: scale(1.3, 0.7); }
+  100% { transform: scale(1, 1); }
+}
+
+#dragon.stretching {
+  animation: estirado 0.3s ease-out;
+}
   </style>
 </head>
 <body>
@@ -61,73 +71,20 @@
  <script>
   const el = document.getElementById('dragon');
 
-  let isDragging = false;
-  let offsetX = 0, offsetY = 0;
-  let velocityX = 0, velocityY = 0;
-  let posX = 0, posY = 0;
-
-  // Configura la posición inicial como centro lógico
-  const originX = 0;
-  const originY = 0;
-
-  el.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    el.classList.add('dragging');
-    offsetX = e.clientX;
-    offsetY = e.clientY;
+  // Cuando presionas
+  el.addEventListener('mousedown', () => {
+    el.classList.add('stretching');
   });
 
-  document.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    posX = e.clientX - offsetX;
-    posY = e.clientY - offsetY;
-    el.style.transform = `translate(${posX}px, ${posY}px)`;
+  // Cuando sueltas
+  el.addEventListener('mouseup', () => {
+    setTimeout(() => el.classList.remove('stretching'), 300);
   });
-
-  document.addEventListener('mouseup', () => {
-    if (!isDragging) return;
-    isDragging = false;
-    el.classList.remove('dragging');
-    animateBack();
-  });
-
-  function animateBack() {
-    function step() {
-      const spring = 0.1;   // fuerza de retorno
-      const damping = 0.8;  // pérdida de energía
-
-      // Calcula fuerza de regreso
-      let forceX = (originX - posX) * spring;
-      let forceY = (originY - posY) * spring;
-
-      // Aplica fuerza a la velocidad
-      velocityX += forceX;
-      velocityY += forceY;
-
-      // Aplica fricción
-      velocityX *= damping;
-      velocityY *= damping;
-
-      // Mueve la posición
-      posX += velocityX;
-      posY += velocityY;
-
-      // Actualiza posición visual
-      el.style.transform = `translate(${posX}px, ${posY}px)`;
-
-      // Sigue mientras no esté "casi quieto"
-      if (Math.abs(velocityX) > 0.1 || Math.abs(velocityY) > 0.1) {
-        requestAnimationFrame(step);
-      } else {
-        el.style.transform = `translate(0px, 0px)`;
-      }
-    }
-
-    requestAnimationFrame(step);
-  }
+   
 </script>
 
 </body>
 </html>
+
 
 
