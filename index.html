@@ -33,30 +33,26 @@
       margin-left: 10px;
     }
 
-    #dragon {
+    #dragon, #glass {
       width: 15vw;
       height: 15vw;
-      background-image: url('Dragon.png');
       background-size: contain;
       background-repeat: no-repeat;
       position: absolute;
-      top: 40vh;
-      left: 47vw;
       transform: translate(-50%, -50%);
       cursor: grab;
     }
 
-     #glass {
-      width: 15vw;
-      height: 15vw;
+    #dragon {
+      background-image: url('Dragon.png');
+      top: 40vh;
+      left: 47vw;
+    }
+
+    #glass {
       background-image: url('Glass.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      position: absolute;
       top: 70vh;
       left: 70vw;
-      transform: translate(-50%, -50%);
-      cursor: grab;
     }
 
     #startBtn {
@@ -83,12 +79,9 @@
       100% { transform: translate(-50%, -50%) scale(1, 1); }
     }
 
-    #dragon.stretching {
-      animation: estirado 0.3s ease-out;
-
+    #dragon.stretching,
     #glass.stretching {
       animation: estirado 0.3s ease-out;
-          
     }
   </style>
 </head>
@@ -106,7 +99,7 @@
     <button id="btnMute" class="music-btn" title="Silenciar música" style="display: none;">🔇</button>
   </div>
 
-  <!-- Dragón interactivo -->
+  <!-- Sprites -->
   <div id="dragon"></div>
   <div id="glass"></div>
 
@@ -114,41 +107,34 @@
   <button id="startBtn" onclick="alert('Inicia el juego...')">Start</button>
 
   <script>
-    const el = document.getElementById('dragon');
-    const sonido = new Audio('dragon.mp3');
-    
+    const dragon = document.getElementById('dragon');
+    const dragonSound = new Audio('dragon.mp3');
+
     const glass = document.getElementById('glass');
-    const glass_sound = new Audio('glass.mp3');
-    
-    
+    const glassSound = new Audio('glass.mp3');
+
     const musica = document.getElementById('musicaFondo');
     const btnPlay = document.getElementById('btnPlay');
     const btnMute = document.getElementById('btnMute');
 
     musica.volume = 0.45;
 
-    // Activar estiramiento + sonido
-    function estirar() {
-      el.classList.add('stretching');
+    function estirarElemento(elemento, sonido) {
+      elemento.classList.add('stretching');
       sonido.currentTime = 0;
       sonido.play().catch(err => console.log("Autoplay bloqueado:", err));
-      setTimeout(() => el.classList.remove('stretching'), 300);
-
-      glass.classList.add('stretching');
-      glass_sound.currentTime = 0;
-      glass_sound.play().catch(err => console.log("Autoplay bloqueado:", err));
-      setTimeout(() => glass.classList.remove('stretching'), 300);
+      setTimeout(() => elemento.classList.remove('stretching'), 300);
     }
 
-    // PC
-    el.addEventListener('mousedown', estirar);
-    el.addEventListener('mouseup', () => {});
+    // Eventos dragón
+    dragon.addEventListener('mousedown', () => estirarElemento(dragon, dragonSound));
+    dragon.addEventListener('touchstart', () => estirarElemento(dragon, dragonSound));
 
-    // Móvil
-    el.addEventListener('touchstart', estirar);
-    el.addEventListener('touchend', () => {});
+    // Eventos glass
+    glass.addEventListener('mousedown', () => estirarElemento(glass, glassSound));
+    glass.addEventListener('touchstart', () => estirarElemento(glass, glassSound));
 
-    // Música fondo
+    // Control de música
     btnPlay.addEventListener('click', () => {
       musica.play().then(() => {
         btnPlay.style.display = 'none';
@@ -165,7 +151,6 @@
 
 </body>
 </html>
-
 
 
 
