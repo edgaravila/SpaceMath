@@ -33,7 +33,7 @@
       margin-left: 10px;
     }
 
-    #dragon, #glass, #fire, #Rocket {
+    #dragon, #glass, #fire, #Rocket, #Bag {
       width: 15vw;
       height: 15vw;
       background-size: contain;
@@ -67,6 +67,12 @@
       left: 20vw;
     }
 
+      #Bag {
+      background-image: url('Bagpack.png');
+      top: 65vh;
+      left: 35vw;
+    }
+
     #startBtn {
       position: absolute;
       bottom: 5vh;
@@ -94,7 +100,8 @@
     #dragon.stretching,
     #glass.stretching,
     #fire.stretching,
-    #Rocket.stretching {
+    #Rocket.stretching,
+    #Bag.stretching{
       animation: estirado 0.3s ease-out;
     }
   </style>
@@ -118,6 +125,7 @@
   <div id="glass"></div>
   <div id="fire"></div>
   <div id="Rocket"></div>
+  <div id="Bag"></div>
 
   <!-- Botón de inicio -->
   <button id="startBtn" onclick="alert('Inicia el juego...')">Start</button>
@@ -134,6 +142,9 @@
 
   const Rocket = document.getElementById('Rocket');
   const RocketSound = new Audio('Rocket.mp3');
+
+  const Bag = document.getElementById('Bag');
+  const BagSound = new Audio('Zipper.mp3');
 
   const musica = document.getElementById('musicaFondo');
   const btnPlay = document.getElementById('btnPlay');
@@ -169,6 +180,12 @@
     setTimeout(() => Rocket.classList.remove('stretching'), 300);
   }
 
+    function estirarBag() {
+    Bag.classList.add('stretching');
+    BagSound.currentTime = 0;
+    BagSound.play().catch(err => console.log("Autoplay bloqueado:", err));
+    setTimeout(() => Bag.classList.remove('stretching'), 300);
+  }
 
   // Eventos individuales
   dragon.addEventListener('mousedown', estirarDragon);
@@ -182,6 +199,9 @@
 
   Rocket.addEventListener('mousedown', estirarRocket);
   Rocket.addEventListener('touchstart', estirarRocket);
+
+  Bag.addEventListener('mousedown', estirarBag);
+  Bag.addEventListener('touchstart', estirarBag);
 
   // Control de música
   btnPlay.addEventListener('click', () => {
@@ -200,6 +220,7 @@
 
 </body>
 </html>
+
 
 
 
