@@ -132,7 +132,7 @@
   const fire = document.getElementById('fire');
   const fireSound = new Audio('fire.mp3');
 
-  const Rocket = document.getElementById('fire');
+  const Rocket = document.getElementById('Rocket');
   const RocketSound = new Audio('Rocket.mp3');
 
   const musica = document.getElementById('musicaFondo');
@@ -180,8 +180,8 @@
   fire.addEventListener('mousedown', estirarFire);
   fire.addEventListener('touchstart', estirarFire);
 
-  Rocket.addEventListener('mousedown', estirarFire);
-  Rocket.addEventListener('touchstart', estirarFire);
+  Rocket.addEventListener('mousedown', estirarRocket);
+  Rocket.addEventListener('touchstart', estirarRocket);
 
   // Control de música
   btnPlay.addEventListener('click', () => {
@@ -200,6 +200,7 @@
 
 </body>
 </html>
+
 
 
 
